@@ -21,6 +21,26 @@ class databaseop():
         self.database = 'user_login'
         self.host = 'localhost'
 
+    # def upload_user_pic(self,id,pic_url,table = 'user_pic'):
+    #     #读取图片文件
+    #     fp = open(pic_url,'rb')
+    #     img = fp.read()
+    #     fp.close()
+    #     print(img)
+    #     sql = '''INSERT INTO %s  VALUES  (%s,%s)'''
+
+    #     db = pymysql.connect(self.host,self.name,self.password, self.database)
+    #     cursor = db.cursor()
+
+    #     cursor.execute(sql,[table,id,img])
+
+    #     cursor.close()
+    #     db.close()
+
+
+
+
+
     #获取所有的用户基本信息，通过学号获取，返回所有匹配的结果(可能为空)
     def get_user_info(self,id,table = 'user_info'):
         sql = '''select * from %s where user_id = %s'''%(table,str(id))
@@ -100,11 +120,12 @@ class databaseop():
         return res
             
 def main():
-    OP = databaseop()
-    
-    info = OP.get_user_info('1844101043')
+    # OP = databaseop()
+    pass
+    # OP.upload_user_pic('2017141461372','Capture1.png')
+    # info = OP.get_user_info('1844101043')
 
-    print(info)
+    # print(info)
 
 if __name__ == '__main__':
     main()
