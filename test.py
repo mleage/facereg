@@ -1,28 +1,36 @@
-# FileName : test.py
-# Author   : JiaDian
-# DateTime : 2019/5/19 23:11 PM
-# SoftWare : PyCharm
-from Entity import StudentInfo
-from Entity import SystemUserInfo
-from Entity import EquipStatusInfo
-from Entity import CheckInfo
-from Entity import AlarmInfo
-from DAO import alarmDAO
-from DAO import checkDAO
-from DAO import equipStatusDAO
-from DAO import stuDAO
-from DAO import sysUserDAO
+import pymysql
+import os
+import datetime
+import winsound
+#系统初始化
+def global_initialization():
+    #检查网络连接状态
+    print("正在检查网络连接")
+    exit_code = os.system('ping www.baidu.com')
+    if exit_code:
+        raise Exception('网络连接失败')
 
+    #检查数据库连接状态
+    connect = pymysql.connect(
+        host = "cdb-g3b6mqvg.cd.tencentcdb.com",
+        port = 10057,
+        user = "jd",
+        database = "faceReg",
+        password = "jd20192019",
+        charset = "utf8")
+    print("数据库连接成功")
+    
+    try:
+        winsound.PlaySound('*', winsound.SND_ALIAS)
+    except RuntimeError as e:
+        print('麦克风连接失败,错误原因：', e)
+    else:
+        print("麦克风连接成功")
+    
+    #import faceReg
+    print("人脸识别库装入成功")
+    
+if __name__ == '__global_initialization__':
+    global_initialization()
 
-if __name__ == '__main__':
-
-    equipstatusdao = equipStatusDAO.equipStatusDAO()
-    equ = EquipStatusInfo.EquipStatus("123","1","2019-6-2","123")
-
-    alarmdao=alarmDAO.alarmDAO()
-    alarm=AlarmInfo.Alarm("123","123","123","123","123","2019-6-2","123","123")
-
-    checkdao=checkDAO.checkDAO()
-    check=CheckInfo.Check("123","123","123","123","123","123","2019-6-2","123","123","123")
-    checkdao.addCheckInfo(check)
-
+#global_initialization()
