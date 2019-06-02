@@ -21,26 +21,6 @@ class databaseop():
         self.database = 'user_login'
         self.host = 'localhost'
 
-    # def upload_user_pic(self,id,pic_url,table = 'user_pic'):
-    #     #读取图片文件
-    #     fp = open(pic_url,'rb')
-    #     img = fp.read()
-    #     fp.close()
-    #     print(img)
-    #     sql = '''INSERT INTO %s  VALUES  (%s,%s)'''
-
-    #     db = pymysql.connect(self.host,self.name,self.password, self.database)
-    #     cursor = db.cursor()
-
-    #     cursor.execute(sql,[table,id,img])
-
-    #     cursor.close()
-    #     db.close()
-
-
-
-
-
     #获取所有的用户基本信息，通过学号获取，返回所有匹配的结果(可能为空)
     def get_user_info(self,id,table = 'user_info'):
         sql = '''select * from %s where user_id = %s'''%(table,str(id))
@@ -103,6 +83,20 @@ class databaseop():
         cursor.close()
         db.close()
 
+    def upload_user_info(self,id,name,password,sex,table = 'user_info'):
+        sql = '''insert into %s  values ('%s','%s','%s',%d);'''%(table,id,name,password,sex)
+        print(sql)
+        db = pymysql.connect(self.host,self.name,self.password, self.database)
+        cursor = db.cursor()
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            db.rollback()
+        cursor.close()
+        db.close()
+
+
     #获取所有用户行为信息
     def get_all_user_behavior_info(self,table = 'user_behavior_info'):
         sql = '''select * from %s'''%(table)
@@ -120,9 +114,13 @@ class databaseop():
         return res
             
 def main():
-    # OP = databaseop()
+    OP = databaseop()
     pass
     # OP.upload_user_pic('2017141461372','Capture1.png')
+    id = 123456789
+    for i in range(20):
+        OP.upload_user_info(str(id),'未知','123456',0)
+        id += 1
     # info = OP.get_user_info('1844101043')
 
     # print(info)
