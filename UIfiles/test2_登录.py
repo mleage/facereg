@@ -29,25 +29,7 @@ class MyThread(QThread):
         #结束运行时发送信号
         self.signal.emit(res)
 
-# class MyLineEdit(QLineEdit):
-#     def __init__(self,parent = None):
-#         super(MyLineEdit,self).__init__(parent)
-#         # self.setFocusPolicy(Qt.NoFocus)
-#         # self.setAlignment(Qt.AlignCenter)
 
-#     def textChanged(self,event):
-#         print('fuck')
-#         if self.text() == '':
-#             self.setAlignment(Qt.AlignCenter)
-#         else:self.setAlignment(Qt.AlignLeft)
-#     def focusInEvent(self,event):
-#         if self.text() == '':
-#             self.setAlignment(Qt.AlignCenter)
-#         else: self.setAlignment(Qt.AlignLeft)
-        
-#     def focusOutEvent(self,event):
-#         if self.text() == '':
-#             self.setAlignment(Qt.AlignCenter)
 
 #登录面板UI,无逻辑代码,逻辑代码需要继承后自己添加
 class login_UI(QWidget):
@@ -55,6 +37,7 @@ class login_UI(QWidget):
         super(login_UI,self).__init__(parent)
         self.initUI()
 
+    #初始化UI界面布局
     def initUI(self):
         self.width = 800
         self.height = 600
@@ -62,16 +45,9 @@ class login_UI(QWidget):
         self.setSizePolicy(QSizePolicy.Fixed,QSizePolicy.Fixed)
 
         self.window_pale = QPalette() 
-        self.window_pale.setBrush(self.backgroundRole(),QBrush(QPixmap('./Icon/background_login.jpg'))) 
+        self.window_pale.setBrush(self.backgroundRole(),QBrush(QPixmap('./Icon/background_end.png'))) 
         self.setPalette(self.window_pale)
 
-        self.center_widget = QWidget(self)
-        center_width = 300
-        center_height = 200
-        self.center_widget.setFixedSize(center_width,center_height)
-        self.center_widget.move(self.width/2 - center_width/2,self.height/2 - center_height/2)
-
-        self.layout = QVBoxLayout()
 
         self.get_id = QLineEdit(self)
         self.get_pass = QLineEdit(self)
@@ -80,39 +56,57 @@ class login_UI(QWidget):
         self.get_id.setMaxLength(20)
         self.get_pass.setMaxLength(20)
 
-        self.get_id.setFixedSize(300,40)
-        self.get_pass.setFixedSize(300,40)
+        self.get_id.setFixedSize(300,30)
+        self.get_pass.setFixedSize(300,30)
 
         self.get_pass.setEchoMode(QLineEdit.Password)
-        # self.get_pass.textChanged.connect(self.change_align_pass)
-        # self.get_pass.focusInEvent().connect(self.change_align_pass)
+
         self.get_id.setPlaceholderText('input id')
-        # self.get_pass.setAlignment(Qt.AlignCenter)
-        # self.get_id.setAlignment(Qt.AlignCenter)
-        # self.get_id.textChanged.connect(self.change_align_id)
 
 
         self.get_pass.setPlaceholderText('input password')
 
         self.ok = QPushButton('login in',self)
-        self.ok.setStyleSheet('''background:lightgrey''')
-        self.ok.setWindowOpacity(0.8)
 
-        self.ok.setFixedSize(300,50)
+        self.ok.setFixedSize(300,40)
 
-        self.layout.addWidget(self.get_id)
-        self.layout.addWidget(self.get_pass)
-        self.layout.addWidget(self.ok)
+        self.label1 = QLabel(self)
+        self.label2 = QLabel(self)
+        self.label1.setAlignment(Qt.AlignCenter)
+        self.label2.setAlignment(Qt.AlignCenter)
 
-        self.center_widget.setLayout(self.layout)
+
+
+        self.label1.setPixmap(QPixmap('./Icon/user-fill.png').scaled(30,30))
+        self.label2.setPixmap(QPixmap('./Icon/lock-fill.png').scaled(30,30))
+
+
+
+        self.getinput_widget = QWidget(self)
+        self.center_layout = QGridLayout()
+        self.center_layout.setSpacing(10)
+        self.center_layout.addWidget(self.label1,1,0)
+        self.center_layout.addWidget(self.get_id,1,1)
+        self.center_layout.addWidget(self.label2,2,0)
+        self.center_layout.addWidget(self.get_pass,2,1)
+
+        self.getinput_widget.setLayout(self.center_layout)
+
+        #中间widget的总大小
+        center_width = 360
+        center_height = 90
+        self.getinput_widget.setFixedSize(center_width,center_height)
+        self.getinput_widget.move(self.width/2 - center_width/2,self.height/2 - center_height/2)
+
+        self.ok.move(270,350)
 
         self.center()
         self.setWindowTitle('Login')
         self.show()
-    # def change_align_id(self):
-    #     self.get_id.setAlignment(Qt.AlignLeft)
-    # def change_align_pass(self):
-    #     self.get_pass.setAlignment(Qt.AlignLeft)
+
+        self.setStyleSheet('''
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:20px;''')
+
     #控制窗口显示在屏幕中心的方法    
     def center(self):
         
@@ -140,9 +134,7 @@ class login(login_UI):
     def __init__(self):
         super(login,self).__init__()
         #设置风格
-        self.setStyleSheet('''
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:20px;
-        ''')
+
         #初始化事件
         self.initLogic()
     def initLogic(self):
@@ -170,6 +162,7 @@ class login(login_UI):
             return 
         
         if res[2] != self.password:
+            self.get_id.setText(self.id)
             MyMessageBox.about(self,"提示","密码错误，请重试！")
             return 
         MyMessageBox.about(self,"提示","登录成功！")
