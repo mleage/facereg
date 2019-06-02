@@ -83,6 +83,20 @@ class databaseop():
         cursor.close()
         db.close()
 
+    def upload_user_info(self,id,name,password,sex,table = 'user_info'):
+        sql = '''insert into %s  values ('%s','%s','%s',%d);'''%(table,id,name,password,sex)
+        print(sql)
+        db = pymysql.connect(self.host,self.name,self.password, self.database)
+        cursor = db.cursor()
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            db.rollback()
+        cursor.close()
+        db.close()
+
+
     #获取所有用户行为信息
     def get_all_user_behavior_info(self,table = 'user_behavior_info'):
         sql = '''select * from %s'''%(table)
@@ -101,10 +115,15 @@ class databaseop():
             
 def main():
     OP = databaseop()
-    
-    info = OP.get_user_info('1844101043')
+    pass
+    # OP.upload_user_pic('2017141461372','Capture1.png')
+    id = 123456789
+    for i in range(20):
+        OP.upload_user_info(str(id),'未知','123456',0)
+        id += 1
+    # info = OP.get_user_info('1844101043')
 
-    print(info)
+    # print(info)
 
 if __name__ == '__main__':
     main()
