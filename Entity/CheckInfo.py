@@ -7,8 +7,7 @@
 class Check(object):
 
     def __init__(self,id,picture,regid,name,college,recogstatus,\
-                 accepttime, picturepos,checked,compvalue,face_x,face_y,\
-                 face_width,face_height):
+                 accepttime, picturepos,checked,compvalue):
         self.id = id
 
         self.picture = picture
@@ -28,11 +27,3 @@ class Check(object):
         self.checked = checked
 
         self.compvalue = compvalue
-
-        self.face_x = face_x
-
-        self.face_y = face_y
-
-        self.face_width = face_width
-
-        self.face_height = face_height

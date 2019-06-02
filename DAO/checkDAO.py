@@ -101,14 +101,9 @@ class checkDAO(object):
         picturepos = Check.picturepos
         checked = Check.checked
         compvalue = Check.compvalue
-        face_x = Check.face_x
-        face_y = Check.face_y
-        face_width = Check.face_width
-        face_height = Check.face_height
         sql="INSERT INTO PERSON_T_CHECKINFO(CI_ID, CI_PICTURE, CI_REGID, CI_PSONNAME, \
-        CI_COLLEGE, CI_RECOGSTATUS, ACCEPTTIME, PICTUREPOS, CI_CHECKED, COMPVALUE, \
-        FACE_X, FACE_Y, FACE_WIDTH, FACE_HEIGHT) VALUES (%s, %s,  %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        stulist=[id, picture, regid, name, college, recogstatus, accepttime, picturepos, checked, compvalue, face_x, face_y, face_width, face_height]
+        CI_COLLEGE, CI_RECOGSTATUS, ACCEPTTIME, PICTUREPOS, CI_CHECKED, COMPVALUE) VALUES (%s, %s,  %s, %s, %s, %s, %s, %s, %s, %s)"
+        stulist=[id, picture, regid, name, college, recogstatus, accepttime, picturepos, checked, compvalue]
         self.insertDb(sql,  stulist)
 
 
@@ -116,15 +111,11 @@ class checkDAO(object):
         id = id
         sql = "select * from PERSON_T_CHECKINFO where CI_ID='%s'" % id
         CheckList = self.selectDb(sql)
-        for Check in CheckList:
-            if(Check.id == id):
-                return Check
+        return CheckList
 
     def selectCheckByRegId(self, regid):
         regid = regid
         sql = "select * from PERSON_T_CHECKINFO where CI_REGID='%s'" % regid
         CheckList = self.selectDb(sql)
-        for Check in CheckList:
-            if(Check.regId == regid):
-                return Check
+        return CheckList
 

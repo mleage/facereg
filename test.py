@@ -9,18 +9,20 @@ from Entity import CheckInfo
 from Entity import AlarmInfo
 from DAO import alarmDAO
 from DAO import checkDAO
-from DAO import equipStatusDao
+from DAO import equipStatusDAO
 from DAO import stuDAO
 from DAO import sysUserDAO
 
 
 if __name__ == '__main__':
 
-    studao = stuDAO.stuDAO()
-    stu = StudentInfo.Student("123","123","123","123","123","123","123","123","123","123","123","123","123","123","123","123")
-    stu.id = "12345"
-    studao.updataStudentInfoById(stu,'123456')
-    stu2=studao.selectStudentById('12345')
-    print(stu2)
+    equipstatusdao = equipStatusDAO.equipStatusDAO()
+    equ = EquipStatusInfo.EquipStatus("123","1","2019-6-2","123")
 
+    alarmdao=alarmDAO.alarmDAO()
+    alarm=AlarmInfo.Alarm("123","123","123","123","123","2019-6-2","123","123")
+
+    checkdao=checkDAO.checkDAO()
+    check=CheckInfo.Check("123","123","123","123","123","123","2019-6-2","123","123","123")
+    checkdao.addCheckInfo(check)
 

@@ -6,15 +6,13 @@
 
 class Alarm(object):
 
-    def __init__(self,id,regid,name,college, alarmstatus,alarminfo,accepttime\
-                 ,picturepos,picture,compvalue):
+    def __init__(self,id,regid,name, alarmstatus,alarminfo,accepttime\
+                 ,picturepos,compvalue):
         self.id=id
 
         self.regid=regid
 
         self.name=name
-
-        self.college=college
 
         self.alarmstatus=alarmstatus
 
@@ -23,7 +21,5 @@ class Alarm(object):
         self.accepttime=accepttime
 
         self.picturepos=picturepos
-
-        self.picture=picture
 
         self.compvalue=compvalue

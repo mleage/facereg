@@ -28,8 +28,8 @@ class sysUserDAO(object):
             tt = self.cursor.execute(sql,sysuserlist)  # 返回 插入数据 条数 可以根据 返回值 判定处理结果
             print(tt)
             self.db.commit()
-        except:
-            print("error")
+        except ValueError:
+            print(ValueError)
             # 发生错误时回滚
             self.db.rollback()
         finally:
@@ -98,15 +98,14 @@ class sysUserDAO(object):
         usertype = SystemUser.usertype
         userpassword = SystemUser.userpassword
         username = SystemUser.username
-        userid = SystemUser.userid
         nickname = SystemUser.nickname
         mobile = SystemUser.mobile
         useflag = SystemUser.useflag
         syslevel = SystemUser.syslevel
         sql="INSERT INTO XT_T_USER(KEYID, USER_ACCOUNT, USER_TYPE, USER_PASSWORD, \
-        USER_NAME, USERID, NICKNAME, HANDSET, USE_FLAG, SYSLEVEL)\
-         VALUES (%s, %s,  %s, %s, %s, %s, %s, %s, %s, %s)"
-        stulist=[keyid, useraccount, usertype, userpassword, username, userid, nickname, mobile, useflag, syslevel]
+        USER_NAME, NICKNAME, HANDSET, USER_FLAG, SYSLEVEL)\
+         VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s)"
+        stulist=[keyid, useraccount, usertype, userpassword, username, nickname, mobile, useflag, syslevel]
         self.insertDb(sql,  stulist)
 
     def addMutiSysUser(self, SysUserList):
@@ -116,15 +115,14 @@ class sysUserDAO(object):
             usertype = SystemUser.usertype
             userpassword = SystemUser.userpassword
             username = SystemUser.username
-            userid = SystemUser.userid
             nickname = SystemUser.nickname
             mobile = SystemUser.mobile
             useflag = SystemUser.useflag
             syslevel = SystemUser.syslevel
             sql = "INSERT INTO XT_T_USER(KEYID, USER_ACCOUNT, USER_TYPE, USER_PASSWORD, \
-                 USER_NAME, USERID, NICKNAME, HANDSET, USE_FLAG, SYSLEVEL)\
-                  VALUES (%s, %s,  %s, %s, %s, %s, %s, %s, %s, %s)"
-            stulist = [keyid, useraccount, usertype, userpassword, username, userid, nickname, mobile, useflag,\
+                 USER_NAME, NICKNAME, HANDSET, USER_FLAG, SYSLEVEL)\
+                  VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s)"
+            stulist = [keyid, useraccount, usertype, userpassword, username, nickname, mobile, useflag,\
                        syslevel]
             self.insertDb(sql, stulist)
 
@@ -152,18 +150,35 @@ class sysUserDAO(object):
         return SysUserList
 
 
-    def updataSysUserInfo(self, SystemUser):
-        keyid = SystemUser.keyid
+    def updataSysUserInfoByKeyId(self, SystemUser,key_id):
+        keyid = key_id
+        mainid=SystemUser.keyid
         useraccount = SystemUser.useraccount
         usertype = SystemUser.usertype
         userpassword = SystemUser.userpassword
         username = SystemUser.username
-        userid = SystemUser.userid
         nickname = SystemUser.nickname
         mobile = SystemUser.mobile
         useflag = SystemUser.useflag
         syslevel = SystemUser.syslevel
         sql="UPDATE XT_T_USER SET KEYID='%s',USER_ACCOUNT='%s',USER_TYPE='%s',USER_PASSWORD='%s'\
-        ,USER_NAME='%s',USERID='%s',NICKNAME='%s',HANDSET='%s',USE_FLAG='%s',SYSLEVEL='%s'"%(keyid,useraccount,\
-            usertype,userpassword,username,userid,nickname,mobile,useflag,syslevel)
-        self.update(sql)
+        ,USER_NAME='%s',NICKNAME='%s',HANDSET='%s',USER_FLAG='%s',SYSLEVEL='%s' WHERE KEYID='%s'"%(mainid,useraccount,\
+            usertype,userpassword,username,nickname,mobile,useflag,syslevel,keyid)
+        self.updateDb(sql)
+
+        def updataSysUserInfoByUserAccount(self, SystemUser, user_account):
+            user_account = user_account
+            mainid = SystemUser.keyid
+            useraccount = SystemUser.useraccount
+            usertype = SystemUser.usertype
+            userpassword = SystemUser.userpassword
+            username = SystemUser.username
+            nickname = SystemUser.nickname
+            mobile = SystemUser.mobile
+            useflag = SystemUser.useflag
+            syslevel = SystemUser.syslevel
+            sql = "UPDATE XT_T_USER SET KEYID='%s',USER_ACCOUNT='%s',USER_TYPE='%s',USER_PASSWORD='%s'\
+            ,USER_NAME='%s',NICKNAME='%s',HANDSET='%s',USER_FLAG='%s',SYSLEVEL='%s' WHERE USER_ACCOUNT='%s'" % (
+            mainid, useraccount, \
+            usertype, userpassword, username, nickname, mobile, useflag, syslevel, keyid, user_account)
+            self.updateDb(sql)

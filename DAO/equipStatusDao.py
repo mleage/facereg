@@ -26,8 +26,8 @@ class equipStatusDAO(object):
             tt = self.cursor.execute(sql,equiplist)  # 返回 插入数据 条数 可以根据 返回值 判定处理结果
             print(tt)
             self.db.commit()
-        except:
-            print("error")
+        except ValueError:
+            print(ValueError)
             # 发生错误时回滚
             self.db.rollback()
         finally:
@@ -91,10 +91,10 @@ class equipStatusDAO(object):
 
 
     def addEquipStatus(self, EquipStatus):
-        keyid = EquipStatus,keyid
-        equipstatus = EquipStatus,equipstatus
-        statusdate = EquipStatus,statusdate
-        equipcodeid = EquipStatus,equipcodeid
+        keyid = EquipStatus.keyid
+        equipstatus = EquipStatus.equipstatus
+        statusdate = EquipStatus.statusdate
+        equipcodeid = EquipStatus.equipcodeid
         sql="INSERT INTO EQ_T_EQUIP_STATUS_INFO(KEYID, EQUIP_STATUS,STATUS_DATE,EQUIPCODE_ID)\
          VALUES (%s, %s,  %s, %s)"
         stulist=[keyid, equipstatus, statusdate, equipcodeid]

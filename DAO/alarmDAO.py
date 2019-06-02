@@ -26,8 +26,8 @@ class alarmDAO(object):
             tt = self.cursor.execute(sql,alarmlist)  # 返回 插入数据 条数 可以根据 返回值 判定处理结果
             print(tt)
             self.db.commit()
-        except:
-            print("error")
+        except ValueError:
+            print(ValueError)
             # 发生错误时回滚
             self.db.rollback()
         finally:
@@ -94,16 +94,14 @@ class alarmDAO(object):
         id = Alarm.id
         regid = Alarm.regid
         name = Alarm.name
-        college = Alarm.college
         alarmstatus = Alarm.alarmstatus
         alarminfo = Alarm.alarminfo
         accepttime = Alarm.accepttime
         picturepos = Alarm.picturepos
-        picture = Alarm.picture
         compvalue = Alarm.compvalue
         sql="INSERT INTO PERSON_R_ALARM(ID, CI_REGID, CI_PSONNAME, \
-        CI_COLLEGE, ALARMSTATUS, ALARMINFO, ACCEPTTIME, PICTUREPOS, ID_PIC, COMPVALUE) VALUES (%s, %s,  %s, %s, %s, %s, %s, %s, %s, %s)"
-        stulist=[id, regid, name, college, alarmstatus, alarminfo, accepttime, picturepos, picture, compvalue]
+        ALARMSTATUS, ALARMINFO, ACCEPTTIME, PICTUREPOS, COMPVALUE) VALUES (%s, %s,  %s, %s, %s, %s, %s, %s)"
+        stulist=[id, regid, name, alarmstatus, alarminfo, accepttime, picturepos, compvalue]
         self.insertDb(sql,  stulist)
 
 
