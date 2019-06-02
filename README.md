@@ -30,12 +30,13 @@
 
 ##### 登录到中心平台
 
-![1559438747715](C:\Users\lzff1\AppData\Roaming\Typora\typora-user-images\1559438747715.png)
+![](效果展示/登录.png)
 
 ##### 中心平台UI（有待更新）
 
-![1559438808745](C:\Users\lzff1\AppData\Roaming\Typora\typora-user-images\1559438808745.png)
+![](效果展示/中心平台.png)
 
 ##### 终端UI(只需要人脸识别包便可以进行识别了)
 
-![1559438904975](C:\Users\lzff1\AppData\Roaming\Typora\typora-user-images\1559438904975.png)
+![](效果展示/终端.png)
+
