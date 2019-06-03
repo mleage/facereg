@@ -4,7 +4,7 @@
 # SoftWare : PyCharm
 
 import pymysql
-
+from Entity import SystemUserInfo
 # username : jd
 # password : jd20192019
 
@@ -157,12 +157,28 @@ class sysUserDAO(object):
         SysUserList = self.selectDb(sql)
         return SysUserList
 
+    def selectSysUserByKeyIdToStudent(self, keyid):
+        keyid = keyid
+        sql = "select * from XT_T_USER where KEYID='%s'" % keyid
+        SysUserList = self.selectDb(sql)
+        print(SysUserList)
+        sys = SystemUserInfo.SystemUser(SysUserList[0],SysUserList[1],SysUserList[2],SysUserList[3],SysUserList[4],
+                                        SysUserList[5],SysUserList[6],SysUserList[7],SysUserList[8])
+        return sys
+
     def selectSysUserByUserAccount(self, useraccount):
         useraccount = useraccount
         sql = "select * from XT_T_USER where USER_ACCOUNT='%s'" % useraccount
         SysUserList = self.selectDb(sql)
         return SysUserList
 
+    def selectSysUserByUserAccountToStudent(self, useraccount):
+        useraccount = useraccount
+        sql = "select * from XT_T_USER where USER_ACCOUNT='%s'" % useraccount
+        SysUserList = self.selectDb(sql)
+        sys = SystemUserInfo.SystemUser(SysUserList[0], SysUserList[1], SysUserList[2], SysUserList[3], SysUserList[4],
+                                        SysUserList[5], SysUserList[6], SysUserList[7], SysUserList[8])
+        return sys
 
     def updataSysUserInfoByKeyId(self, SystemUser,key_id):
         keyid = key_id

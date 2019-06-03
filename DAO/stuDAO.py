@@ -4,6 +4,7 @@
 # SoftWare : PyCharm
 
 import pymysql
+from Entity import StudentInfo
 # username : jd
 # password : jd20192019
 
@@ -172,11 +173,33 @@ class stuDAO(object):
         StudentList=self.selectDb(sql)
         return StudentList
 
+    def selectStudentByIdToStudent(self, id):
+        id = id
+        sql = "select * from PERSON_T_REGINFO where CI_MAIN='%s'" % id
+        StudentList = self.selectDb(sql)
+        stu = StudentInfo.Student(StudentList[0], StudentList[1], StudentList[2], StudentList[3], StudentList[4],
+                                  StudentList[5], \
+                                  StudentList[7], StudentList[9], StudentList[10], StudentList[11], StudentList[12],
+                                  StudentList[13], \
+                                  StudentList[14], StudentList[16], StudentList[17], StudentList[18])
+        return stu
+
     def selectStudentByRegId(self, regid):
         regid=regid
         sql = "select * from PERSON_T_REGINFO where CI_REGID='%s'" % regid
         StudentList = self.selectDb(sql)
         return StudentList
+
+    def selectStudentByRegIdToStudent(self, regid):
+        regid = regid
+        sql = "select * from PERSON_T_REGINFO where CI_REGID='%s'" % regid
+        StudentList = self.selectDb(sql)
+        stu = StudentInfo.Student(StudentList[0], StudentList[1], StudentList[2], StudentList[3], StudentList[4],
+                                  StudentList[5], \
+                                  StudentList[7], StudentList[9], StudentList[10], StudentList[11], StudentList[12],
+                                  StudentList[13], \
+                                  StudentList[14], StudentList[16], StudentList[17], StudentList[18])
+        return stu
 
     def selectStudentByName(self, name):
         name=name
@@ -184,6 +207,16 @@ class stuDAO(object):
         StudentList = self.selectDb(sql)
         return StudentList
 
+    def selectStudentByName(self, name):
+        name = name
+        sql = "select * from PERSON_T_REGINFO where CI_PSONNAME='%s'" % name
+        StudentList = self.selectDb(sql)
+        stu = StudentInfo.Student(StudentList[0], StudentList[1], StudentList[2], StudentList[3], StudentList[4],
+                                  StudentList[5], \
+                                  StudentList[7], StudentList[9], StudentList[10], StudentList[11], StudentList[12],
+                                  StudentList[13], \
+                                  StudentList[14], StudentList[16], StudentList[17], StudentList[18])
+        return stu
 
     def updataStudentInfoById(self, Student,id):
         id = id

@@ -4,6 +4,7 @@
 # SoftWare : PyCharm
 
 import pymysql
+from Entity import CheckInfo
 # username : jd
 # password : jd20192019
 
@@ -126,11 +127,28 @@ class checkDAO(object):
         CheckList = self.selectDb(sql)
         return CheckList
 
+    def selectCheckByIdToStudent(self, id):
+        id = id
+        sql = "select * from PERSON_T_CHECKINFO where CI_ID='%s'" % id
+        CheckList = self.selectDb(sql)
+        check=CheckInfo.Check(CheckList[0],CheckList[1],CheckList[2],CheckList[3],CheckList[4],CheckList[5],CheckList[6]
+                              ,CheckList[7],CheckList[8],CheckList[9])
+        return check
+
     def selectCheckByRegId(self, regid):
         regid = regid
         sql = "select * from PERSON_T_CHECKINFO where CI_REGID='%s'" % regid
         CheckList = self.selectDb(sql)
         return CheckList
+
+    def selectCheckByRegIdToStudent(self, regid):
+        regid = regid
+        sql = "select * from PERSON_T_CHECKINFO where CI_REGID='%s'" % regid
+        CheckList = self.selectDb(sql)
+        check = CheckInfo.Check(CheckList[0], CheckList[1], CheckList[2], CheckList[3], CheckList[4], CheckList[5],
+                                CheckList[6]
+                                , CheckList[7], CheckList[8], CheckList[9])
+        return check
 
     def getAllCheckInfo(self):
         sql = "select * from PERSON_T_CHECKINFO"

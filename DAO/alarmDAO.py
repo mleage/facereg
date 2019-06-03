@@ -4,6 +4,7 @@
 # SoftWare : PyCharm
 
 import pymysql
+from Entity import AlarmInfo
 # username : jd
 # password : jd20192019
 
@@ -124,11 +125,26 @@ class alarmDAO(object):
         AlarmList = self.selectDb(sql)
         return AlarmList
 
+    def selectAlarmByIdToStudent(self, id):
+        id = id
+        sql = "select * from PERSON_R_ALARM where ID='%s'" % id
+        AlarmList = self.selectDb(sql)
+        alarm=AlarmInfo.Alarm(AlarmList[0],AlarmList[1],AlarmList[2],AlarmList[3],AlarmList[4],AlarmList[5],AlarmList[6],AlarmList[7])
+        return alarm
+
     def selectAlarmByRegId(self, regid):
         regid = regid
         sql = "select * from PERSON_R_ALARM where CI_REGID='%s'" % regid
         AlarmList = self.selectDb(sql)
         return AlarmList
+
+    def selectAlarmByRegIdToStudent(self, regid):
+        regid = regid
+        sql = "select * from PERSON_R_ALARM where CI_REGID='%s'" % regid
+        AlarmList = self.selectDb(sql)
+        alarm = AlarmInfo.Alarm(AlarmList[0], AlarmList[1], AlarmList[2], AlarmList[3], AlarmList[4], AlarmList[5],
+                                AlarmList[6], AlarmList[7])
+        return alarm
 
     def deleteAlarmById(self, id):
         id = id
