@@ -85,6 +85,20 @@ class sysUserDAO(object):
         finally:
             self.cursor.close()
 
+    def selectDbAll(self,sql):
+        ''' 数据库查询 '''
+        self.cursor = self.db.cursor()
+        try:
+            self.cursor.execute(sql) # 返回 查询数据 条数 可以根据 返回值 判定处理结果
+
+            data = self.cursor.fetchall() # 返回所有记录列表
+
+            return data
+        except:
+            print('Error: unable to fecth data')
+        finally:
+            self.cursor.close()
+
 
     def closeDb(self):
         ''' 数据库连接关闭 '''
@@ -166,19 +180,24 @@ class sysUserDAO(object):
             usertype,userpassword,username,nickname,mobile,useflag,syslevel,keyid)
         self.updateDb(sql)
 
-        def updataSysUserInfoByUserAccount(self, SystemUser, user_account):
-            user_account = user_account
-            mainid = SystemUser.keyid
-            useraccount = SystemUser.useraccount
-            usertype = SystemUser.usertype
-            userpassword = SystemUser.userpassword
-            username = SystemUser.username
-            nickname = SystemUser.nickname
-            mobile = SystemUser.mobile
-            useflag = SystemUser.useflag
-            syslevel = SystemUser.syslevel
-            sql = "UPDATE XT_T_USER SET KEYID='%s',USER_ACCOUNT='%s',USER_TYPE='%s',USER_PASSWORD='%s'\
-            ,USER_NAME='%s',NICKNAME='%s',HANDSET='%s',USER_FLAG='%s',SYSLEVEL='%s' WHERE USER_ACCOUNT='%s'" % (
-            mainid, useraccount, \
-            usertype, userpassword, username, nickname, mobile, useflag, syslevel, keyid, user_account)
-            self.updateDb(sql)
+    def updataSysUserInfoByUserAccount(self, SystemUser, user_account):
+        user_account = user_account
+        mainid = SystemUser.keyid
+        useraccount = SystemUser.useraccount
+        usertype = SystemUser.usertype
+        userpassword = SystemUser.userpassword
+        username = SystemUser.username
+        nickname = SystemUser.nickname
+        mobile = SystemUser.mobile
+        useflag = SystemUser.useflag
+        syslevel = SystemUser.syslevel
+        sql = "UPDATE XT_T_USER SET KEYID='%s',USER_ACCOUNT='%s',USER_TYPE='%s',USER_PASSWORD='%s'\
+        ,USER_NAME='%s',NICKNAME='%s',HANDSET='%s',USER_FLAG='%s',SYSLEVEL='%s' WHERE USER_ACCOUNT='%s'" % (
+        mainid, useraccount, \
+        usertype, userpassword, username, nickname, mobile, useflag, syslevel, keyid, user_account)
+        self.updateDb(sql)
+
+    def getAllSysUserInfo(self):
+        sql = "select * from XT_T_USER"
+        SysUserList = self.selectDbAll(sql)
+        return SysUserList

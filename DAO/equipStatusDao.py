@@ -83,6 +83,20 @@ class equipStatusDAO(object):
         finally:
             self.cursor.close()
 
+    def selectDbAll(self,sql):
+        ''' 数据库查询 '''
+        self.cursor = self.db.cursor()
+        try:
+            self.cursor.execute(sql) # 返回 查询数据 条数 可以根据 返回值 判定处理结果
+
+            data = self.cursor.fetchall() # 返回所有记录列表
+
+            return data
+        except:
+            print('Error: unable to fecth data')
+        finally:
+            self.cursor.close()
+
 
     def closeDb(self):
         ''' 数据库连接关闭 '''
@@ -99,3 +113,8 @@ class equipStatusDAO(object):
          VALUES (%s, %s,  %s, %s)"
         stulist=[keyid, equipstatus, statusdate, equipcodeid]
         self.insertDb(sql,  stulist)
+
+    def getAllEquipStatusInfo(self):
+        sql = "select * from EQ_T_EQUIP_STATUS_INFO"
+        EquipStatusList = self.selectDbAll(sql)
+        return EquipStatusList

@@ -86,6 +86,20 @@ class stuDAO(object):
         finally:
             self.cursor.close()
 
+    def selectDbAll(self,sql):
+        ''' 数据库查询 '''
+        self.cursor = self.db.cursor()
+        try:
+            self.cursor.execute(sql) # 返回 查询数据 条数 可以根据 返回值 判定处理结果
+
+            data = self.cursor.fetchall() # 返回所有记录列表
+
+            return data
+        except:
+            print('Error: unable to fecth data')
+        finally:
+            self.cursor.close()
+
 
     def closeDb(self):
         ''' 数据库连接关闭 '''
@@ -218,3 +232,8 @@ class stuDAO(object):
         mainid, picture, regId, name, college, mentor, isreg, sex, unitnum, dormnum, major, suit, is_green, region,
         nation, classid, regid)
         self.updateDb(sql)
+
+    def getAllStudentInfo(self):
+        sql = "select * from PERSON_T_REGINFO"
+        StudentList = self.selectDbAll(sql)
+        return StudentList
