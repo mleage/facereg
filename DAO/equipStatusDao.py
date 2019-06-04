@@ -118,3 +118,30 @@ class equipStatusDAO(object):
         sql = "select * from EQ_T_EQUIP_STATUS_INFO"
         EquipStatusList = self.selectDbAll(sql)
         return EquipStatusList
+
+
+    def writeEquipStatusIntoExecl(self):
+        try:
+            re = self.getAllEquipStatusInfo()
+            import numpy as np
+            import xlwt
+            book = xlwt.Workbook()
+            # 创建表单
+            sheet1 = book.add_sheet(u'sheet1', cell_overwrite_ok=True)
+            # 按i行j列顺序依次存入表格
+
+            sheet1.write(0, 0, 'id')
+            sheet1.write(0, 1, 'equipstatus')
+            sheet1.write(0, 2, 'statusdate')
+            sheet1.write(0, 3, 'equipcodeid')
+            for i in range(len(re)):
+                sheet1.write(i + 1, 0, re[i][0])
+                sheet1.write(i + 1, 1, re[i][1])
+                sheet1.write(i + 1, 2, re[i][2])
+                sheet1.write(i + 1, 3, re[i][3])
+                # 保存文件
+            book.save('equipstatus.xls')
+        except:
+            import traceback
+            traceback.print_exc()
+            # 发生错误时会滚

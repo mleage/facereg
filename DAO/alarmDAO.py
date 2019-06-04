@@ -157,7 +157,41 @@ class alarmDAO(object):
         sql = "DELETE FROM PERSON_R_ALARM  WHERE CI_REGID = '%s'" % regid
         self.deleteDb(sql)
 
-    def getAlarmInfo(self):
+    def getAllAlarmInfo(self):
         sql = "select * from PERSON_R_ALARM"
         AlarmList = self.selectDbAll(sql)
         return AlarmList
+
+    def writeAlarmIntoExcel(self):
+        try:
+            re = self.getAllAlarmInfo()
+            import numpy as np
+            import xlwt
+            book = xlwt.Workbook()
+            # 创建表单
+            sheet1 = book.add_sheet(u'sheet1', cell_overwrite_ok=True)
+            # 按i行j列顺序依次存入表格
+
+            sheet1.write(0, 0, 'id')
+            sheet1.write(0, 1, 'regid')
+            sheet1.write(0, 2, 'name')
+            sheet1.write(0, 3, 'alarmstatus')
+            sheet1.write(0, 4, 'alarminfo')
+            sheet1.write(0, 5, 'accepttime')
+            sheet1.write(0, 6, 'picturepos')
+            sheet1.write(0, 7, 'compvalue')
+            for i in range(len(re)):
+                sheet1.write(i + 1, 0, re[i][0])
+                sheet1.write(i + 1, 1, re[i][1])
+                sheet1.write(i + 1, 2, re[i][2])
+                sheet1.write(i + 1, 3, re[i][3])
+                sheet1.write(i + 1, 4, str(re[i][4]))
+                sheet1.write(i + 1, 5, str(re[i][5]))
+                sheet1.write(i + 1, 6, str(re[i][6]))
+                sheet1.write(i + 1, 7, re[i][7])
+                # 保存文件
+            book.save('alarm.xls')
+        except:
+            import traceback
+            traceback.print_exc()
+            # 发生错误时会滚

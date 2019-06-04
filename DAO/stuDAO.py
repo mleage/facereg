@@ -270,3 +270,53 @@ class stuDAO(object):
         sql = "select * from PERSON_T_REGINFO"
         StudentList = self.selectDbAll(sql)
         return StudentList
+
+    def writeStudentIntoExecl(self):
+        try:
+            re = self.getAllStudentInfo()
+            import numpy as np
+            import xlwt
+            book = xlwt.Workbook()
+            # 创建表单
+            sheet1 = book.add_sheet(u'sheet1', cell_overwrite_ok=True)
+            # 按i行j列顺序依次存入表格
+
+            sheet1.write(0, 0, 'id')
+            sheet1.write(0, 1, 'picture')
+            sheet1.write(0, 2, 'regid')
+            sheet1.write(0, 3, 'name')
+            sheet1.write(0, 4, 'college')
+            sheet1.write(0, 5, 'mentor')
+            sheet1.write(0, 6, 'isreg')
+            sheet1.write(0, 7, 'sex')
+            sheet1.write(0, 8, 'unitnum')
+            sheet1.write(0, 9, 'dormnum')
+            sheet1.write(0, 10, 'major')
+            sheet1.write(0, 11, 'suit')
+            sheet1.write(0, 12, 'is_green')
+            sheet1.write(0, 13, 'region')
+            sheet1.write(0, 14, 'nation')
+            sheet1.write(0, 15, 'classid')
+            for i in range(len(re)):
+                sheet1.write(i + 1, 0, re[i][0])
+                sheet1.write(i + 1, 1, re[i][1])
+                sheet1.write(i + 1, 2, re[i][2])
+                sheet1.write(i + 1, 3, re[i][3])
+                sheet1.write(i + 1, 4, str(re[i][4]))
+                sheet1.write(i + 1, 5, str(re[i][5]))
+                sheet1.write(i + 1, 6, str(re[i][6]))
+                sheet1.write(i + 1, 7, re[i][7])
+                sheet1.write(i + 1, 8, str(re[i][8]))
+                sheet1.write(i + 1, 9, str(re[i][9]))
+                sheet1.write(i + 1, 10, str(re[i][10]))
+                sheet1.write(i + 1, 11, str(re[i][11]))
+                sheet1.write(i + 1, 12, str(re[i][12]))
+                sheet1.write(i + 1, 13, str(re[i][13]))
+                sheet1.write(i + 1, 14, str(re[i][14]))
+                sheet1.write(i + 1, 15, str(re[i][15]))
+                # 保存文件
+            book.save('student.xls')
+        except:
+            import traceback
+            traceback.print_exc()
+            # 发生错误时会滚

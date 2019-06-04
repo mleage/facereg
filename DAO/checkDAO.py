@@ -154,3 +154,41 @@ class checkDAO(object):
         sql = "select * from PERSON_T_CHECKINFO"
         CheckList = self.selectDbAll(sql)
         return CheckList
+
+    def writeCheckIntoExcel(self):
+        try:
+            re = self.getAllCheckInfo()
+            import numpy as np
+            import xlwt
+            book = xlwt.Workbook()
+            # 创建表单
+            sheet1 = book.add_sheet(u'sheet1', cell_overwrite_ok=True)
+            # 按i行j列顺序依次存入表格
+
+            sheet1.write(0, 0, 'id')
+            sheet1.write(0, 1, 'picture')
+            sheet1.write(0, 2, 'regid')
+            sheet1.write(0, 3, 'name')
+            sheet1.write(0, 4, 'college')
+            sheet1.write(0, 5, 'recogstatus')
+            sheet1.write(0, 6, 'accepttime')
+            sheet1.write(0, 7, 'picturepos')
+            sheet1.write(0, 8, 'checked')
+            sheet1.write(0, 9, 'compvalue')
+            for i in range(len(re)):
+                sheet1.write(i + 1, 0, re[i][0])
+                sheet1.write(i + 1, 1, re[i][1])
+                sheet1.write(i + 1, 2, re[i][2])
+                sheet1.write(i + 1, 3, re[i][3])
+                sheet1.write(i + 1, 4, str(re[i][4]))
+                sheet1.write(i + 1, 5, str(re[i][5]))
+                sheet1.write(i + 1, 6, str(re[i][6]))
+                sheet1.write(i + 1, 7, re[i][7])
+                sheet1.write(i + 1, 8, str(re[i][8]))
+                sheet1.write(i + 1, 9, str(re[i][9]))
+                # 保存文件
+            book.save('check.xls')
+        except:
+            import traceback
+            traceback.print_exc()
+            # 发生错误时会滚
