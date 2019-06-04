@@ -5,8 +5,7 @@
 
 class EquipStatus(object):
 
-    def __init__(self,keyid,equipstatus,statusdate,equipcodeid):
-        self.keyid=keyid
+    def __init__(self,equipstatus,statusdate,equipcodeid):
 
         self.equipstatus=equipstatus
 

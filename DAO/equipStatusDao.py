@@ -105,14 +105,13 @@ class equipStatusDAO(object):
 
 
     def addEquipStatus(self, EquipStatus):
-        keyid = EquipStatus.keyid
         equipstatus = EquipStatus.equipstatus
         statusdate = EquipStatus.statusdate
         equipcodeid = EquipStatus.equipcodeid
-        sql="INSERT INTO EQ_T_EQUIP_STATUS_INFO(KEYID, EQUIP_STATUS,STATUS_DATE,EQUIPCODE_ID)\
-         VALUES (%s, %s,  %s, %s)"
-        stulist=[keyid, equipstatus, statusdate, equipcodeid]
-        self.insertDb(sql,  stulist)
+        sql="INSERT INTO EQ_T_EQUIP_STATUS_INFO(EQUIP_STATUS,STATUS_DATE,EQUIPCODE_ID)\
+         VALUES (%s,  %s, %s)"
+        equiplist=[equipstatus, statusdate, equipcodeid]
+        self.insertDb(sql,  equiplist)
 
     def getAllEquipStatusInfo(self):
         sql = "select * from EQ_T_EQUIP_STATUS_INFO"
